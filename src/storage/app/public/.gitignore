@@ -2,3 +2,5 @@
 !.gitignore
 !images/
 !images/*
+!profiles/
+!profiles/*
