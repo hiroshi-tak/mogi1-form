@@ -57,6 +57,13 @@
     font-size: 16px;
 }
 
+.action-icon-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    width: 28px;
+}
+
 .action-icon {
     width: 28px;
 }

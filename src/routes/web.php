@@ -30,8 +30,9 @@ Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show
 Route::get('/purchase/cancel', [PurchaseController::class,'cancel'])->name('purchase.cancel');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // いいね追加
+    // いいね
     Route::post('/item/{item_id}/like', [LikeController::class, 'store'])->name('likes.store');
+    Route::delete('/item/{item_id}/like', [LikeController::class, 'destroy'])->name('likes.destroy');
 
     //コメント
     Route::post('/item/{item_id}/comment', [CommentController::class, 'store'])->name('comments.store');

@@ -93,7 +93,7 @@ class PurchaseController extends Controller
                 ->with('error', 'この商品はすでに購入されています');
         }
 
-        $address = session('purchase_address');
+        $address = session('purchase_address', []);
 
         Purchase::create([
             'user_id' => auth()->id(),
@@ -102,6 +102,10 @@ class PurchaseController extends Controller
             'postal_code' => $address['postal_code'] ?? auth()->user()->profile->postal_code,
             'address' => $address['address'] ?? auth()->user()->profile->address,
             'building' => $address['building'] ?? auth()->user()->profile->building,
+        ]);
+
+        $item->update([
+            'is_sold' => true
         ]);
 
         return redirect('/')->with('success', '購入が完了しました');

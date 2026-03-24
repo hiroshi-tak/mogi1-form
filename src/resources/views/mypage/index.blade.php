@@ -11,14 +11,14 @@
     <div class="profile-area">
         <div class="profile-left">
             <div class="profile-icon">
-                @if(Auth::user()->profile?->image)
-                    <img class="profile-icon-item" src="{{ asset('storage/' . Auth::user()->profile->image) }}" alt="プロフィール画像">
+                @if($user->profile?->image)
+                    <img class="profile-icon-item" src="{{ asset('storage/' . $user->profile->image) }}" alt="プロフィール画像">
                 @else
                     <div class="avatar-placeholder"></div>
                 @endif
             </div>
             <div class="profile-name">
-                {{ Auth::user()->name }}
+                {{ $user->name }}
             </div>
         </div>
         <div class="profile-right">
@@ -30,11 +30,11 @@
     {{-- タブ --}}
     <div class="item-tab">
         <a href="{{ route('mypage.index', ['tab' => 'selling']) }}"
-        class="tab {{ request()->input('tab') !== 'purchased' ? 'active' : '' }}">
+        class="tab {{ request('tab') !== 'purchased' ? 'active' : '' }}">
             出品した商品
         </a>
         <a href="{{ route('mypage.index', ['tab' => 'purchased']) }}"
-        class="tab {{ request()->input('tab') === 'purchased' ? 'active' : '' }}">
+        class="tab {{ request('tab') === 'purchased' ? 'active' : '' }}">
             購入した商品
         </a>
     </div>
@@ -43,7 +43,9 @@
         @foreach($items as $item)
         <div class="item-card">
             <div class="item-image">
-                <img class="item-image-item" src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
+                <img class="item-image-item"
+                src="{{ $item->image ? asset('storage/'.$item->image) : asset('images/noimage.png') }}"
+                alt="商品画像">
             </div>
             <p class="item-name">
                 {{ $item->name }}

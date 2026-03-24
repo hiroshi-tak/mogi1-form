@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
+    use HasFactory;
+
     const CONDITIONS = [
     1 => '良好',
     2 => '目立った傷や汚れなし',
@@ -23,6 +25,10 @@ class Item extends Model
         'condition',
         'image',
         'is_sold'
+    ];
+
+    protected $casts = [
+        'is_sold' => 'boolean',
     ];
 
     public function user()

@@ -15,10 +15,14 @@ class MyPageController extends Controller
 
         if ($tab === 'purchased') {
             // 購入した商品
-            $items = $user->purchases()->latest()->get();
+            $items = Item::whereIn(
+                'id',
+                $user->purchases()->pluck('item_id')
+            )->latest()->get();
+
         } else {
             // デフォルトは出品商品（おすすめ）
-            $items = $user->items()->latest()->get();
+            $items = $user->items()->latest()->with('user')->get();
         }
 
         return view('mypage.index', compact('user', 'items'));
@@ -35,34 +39,27 @@ class MyPageController extends Controller
     {
         $user = auth()->user();
 
-        // Profile モデルの fillable を確認済み前提
-        $profile = $user->profile;
+        // 保存するデータを配列にまとめる
+        $data = [
+            'postal_code' => $request->postal_code,
+            'address'     => $request->address,
+            'building'    => $request->building,
+        ];
 
-        // 初回作成時
-        if (! $profile) {
-            $profile = $user->profile()->create([
-                'postal_code' => $request->postal_code,
-                'address'     => $request->address,
-                'building'    => $request->building,
-                'image'       => null,
-            ]);
-        }
-
-        // 画像があれば保存
+        // 画像があれば保存してデータにセット
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('profiles','public');
-            $profile->image = $path;
+            $path = $request->file('image')->store('profiles', 'public');
+            $data['image'] = $path;
         }
 
-        // フォームの値で更新
-        $profile->postal_code = $request->postal_code;
-        $profile->address     = $request->address;
-        $profile->building    = $request->building;
-        $profile->save();
+        // 初回作成・更新をまとめて実行
+        $user->profile()->updateOrCreate(
+            ['user_id' => $user->id],
+            $data
+        );
 
         // ユーザー名更新
-        $user->name = $request->name;
-        $user->save();
+        $user->update(['name' => $request->name]);
 
         return redirect()->route('mypage.index');
     }

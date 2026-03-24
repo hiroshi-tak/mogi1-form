@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
+    use HasFactory;
+
     const PAYMENT_METHODS = [
         1 => 'konbini',
         2 => 'card'

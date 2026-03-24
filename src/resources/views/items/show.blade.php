@@ -27,16 +27,25 @@
             <div class="item-actions">
                 {{-- いいね --}}
                 <div class="item-actions-like">
-                    <form action="{{ route('likes.store', $item->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" style="border:none;background:none;padding:0;">
-                            @if($item->likes->where('user_id', auth()->id())->count())
+                    @php
+                        $liked = $item->likes->where('user_id', auth()->id())->count();
+                    @endphp
+                    @if($liked)
+                        <form action="{{ route('likes.destroy', $item->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="action-icon-btn" type="submit">
                                 <img src="{{ asset('images/ハートロゴ_ピンク.png') }}" class="action-icon">
-                            @else
+                            </button>
+                        </form>
+                    @else
+                        <form action="{{ route('likes.store', $item->id) }}" method="POST">
+                            @csrf
+                            <button class="action-icon-btn" type="submit">
                                 <img src="{{ asset('images/ハートロゴ_デフォルト.png') }}" class="action-icon">
-                            @endif
-                        </button>
-                    </form>
+                            </button>
+                        </form>
+                    @endif
                     <span>{{ $item->likes->count() }}</span>
                 </div>
                 {{-- コメント --}}

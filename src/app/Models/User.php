@@ -62,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class);
     }
 
+    // 購入商品はpurchasesテーブル経由で取得
     public function purchases()
     {
         return $this->hasManyThrough(
@@ -74,6 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    // お気に入り商品取得
     public function likedItems()
     {
         return $this->belongsToMany(Item::class, 'likes');
