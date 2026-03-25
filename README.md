@@ -13,10 +13,25 @@
 
 1. docker-compose exec php bash
 2. composer install
-3. .env.exampleファイルから.envを作成し、環境変数を変更
+3. cp .env.example .env
+   * MAIL_FROM_ADDRESS=test@example.com
+   * MAILHOG_URL=http://localhost:8025
+   * STRIPE_KEY,STRIPE_SECRET設定
 4. php artisan key:generate
 5. php artisan migrate
 6. php artisan db:seed
+7. php artisan storage:link
+8. cp .env .env.testing
+   * DB_DATABASE=demo_testに変更
+   * MAIL_MAILER=log
+   * MAIL_FROM_ADDRESS=test@example.com
+   * MAIL_FROM_NAME="Test"
+9. mysql -u root -p
+10. CREATE DATABASE demo_test;
+   (SHOW DATABASES;でdemo_testあれば不要)
+11. php artisan key:generate --env=testing
+12. php artisan config:clear
+13. php artisan migrate --env=testing
 
 ## 開発環境
 
@@ -28,7 +43,7 @@
 
 - PHP 8.1.34
 - Laravel 8.83.8
-- jquery
+- GD 2.3.3
 - MySQL 8.0.26
 - nginx 1.21.1
 
