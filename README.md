@@ -33,11 +33,28 @@
 12. php artisan config:clear
 13. php artisan migrate --env=testing
 
+### ユーザー登録について
+ユーザーは2人登録
+* 一人目  10商品出品
+  * ユーザー名	：Taro Yamada
+  * email		: taro@example.com
+  * password		: 12345678
+* 二人目  0商品出品(出品なし)
+  * ユーザー名	：Jiro Yamada
+  * email		: jiro@example.com
+  * password		: 12345678
+
+## テスト実行
+1. php artisan config:clear
+2. php artisan cache:clear
+3. php artisan test
+
 ## 開発環境
 
 - 商品一覧画面:http://localhost/
 - 会員登録:http://localhost/register
 - phpMyAdmin:http://localhost:8080/
+- MailHog:http://localhost:8025/
 
 ## 使用技術
 
