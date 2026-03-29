@@ -14,6 +14,10 @@
 1. docker-compose exec php bash
 2. composer install
 3. cp .env.example .env
+   * DB_HOST=mysql
+   * DB_DATABASE=laravel_db
+   * DB_USERNAME=laravel_user
+   * DB_PASSWORD=laravel_pass
    * MAIL_FROM_ADDRESS=test@example.com
    * MAILHOG_URL=http://localhost:8025
    * STRIPE_KEY,STRIPE_SECRET設定
@@ -22,13 +26,16 @@
 6. php artisan db:seed
 7. php artisan storage:link
 8. cp .env .env.testing
-   * DB_DATABASE=demo_testに変更
+   * APP_ENV=testing
+   * APP_KEY=
+   * DB_DATABASE=demo_test
+   * DB_USERNAME=root
+   * DB_PASSWORD=root
    * MAIL_MAILER=log
    * MAIL_FROM_ADDRESS=test@example.com
    * MAIL_FROM_NAME="Test"
 9. mysql -u root -p
 10. CREATE DATABASE demo_test;
-   (SHOW DATABASES;でdemo_testあれば不要)
 11. php artisan key:generate --env=testing
 12. php artisan config:clear
 13. php artisan migrate --env=testing
