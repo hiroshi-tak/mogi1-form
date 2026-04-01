@@ -15,6 +15,8 @@ use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\VerifyEmailResponse;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
+use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
+use App\Http\Requests\LoginRequest;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -50,6 +52,8 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::verifyEmailView(function () {
             return view('auth.verify-email');
         });
+
+        $this->app->bind(FortifyLoginRequest::class, LoginRequest::class);
 
         $this->app->singleton(LoginResponse::class, function () {
             return new class implements LoginResponse {

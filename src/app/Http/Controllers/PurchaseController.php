@@ -35,7 +35,7 @@ class PurchaseController extends Controller
             'purchase_address' => [
                 'postal_code' => $request->postal_code,
                 'address' => $request->address,
-                'building' => $request->building,
+                'building' => $request->input('building') ?? '',
             ]
         ]);
 

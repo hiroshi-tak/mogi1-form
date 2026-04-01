@@ -34,7 +34,7 @@
         {{-- 建物名 --}}
         <div class="form-group">
             <label class="group-item">建物名</label>
-            <input type="text" name="building" value="{{ old('building', Auth::user()->building) }}" class="group-input">
+            <input type="text" name="building" value="{{ old('building', session('purchase_address.building') ?? Auth::user()->building) }}" class="group-input">
             <div class="form__error">
                 @error('building')
                 {{ $message }}

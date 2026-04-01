@@ -9,7 +9,7 @@
     <div class="login-form__heading">
         <h1>ログイン</h1>
     </div>
-    <form class="form" action="/login" method="post">
+    <form class="form" action="/login" method="post" novalidate>
         @csrf
         <div class="form__group">
         <div class="form__group-title">
